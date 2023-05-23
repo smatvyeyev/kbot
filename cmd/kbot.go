@@ -1,20 +1,20 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
-	telebot "gopkg.in/telebot.v3"
+	tele "gopkg.in/telebot.v3"
 )
 
-var {
+var (
 	//bot TeleToken
-	TeleToken:  os.Getenv("TELE_OKEN")
-}
+	TeleToken = os.Getenv("TELE_TOKEN")
+)
 
 // kbotCmd represents the kbot command
 var kbotCmd = &cobra.Command{
