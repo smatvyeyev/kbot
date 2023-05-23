@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	tele "gopkg.in/telebot.v3"
+	telebot "gopkg.in/telebot.v3"
 )
 
 var (
