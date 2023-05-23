@@ -8,7 +8,13 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	telebot "gopkg.in/telebot.v3"
 )
+
+var {
+	//bot TeleToken
+	TeleToken:  os.Getenv("TELE_OKEN")
+}
 
 // kbotCmd represents the kbot command
 var kbotCmd = &cobra.Command{
