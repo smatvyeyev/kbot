@@ -12,7 +12,10 @@ kbot called v1.0.1 started2023/05/24 23:00:21 Please check TELE_TOKEN variable. 
 @smatvyeyev ➜ /workspaces/kbot (main) $ ./kbot version
 v1.0.1
 
-
+@smatvyeyev ➜ /workspaces/kbot (main) $ read -s TELE_TOKEN
+@smatvyeyev ➜ /workspaces/kbot (main) $ echo $TELE_TOKEN
+6070479572:AAHm-6DGPwZGmOoeSfP9Uz_wBS-Ux_TJbWE
+@smatvyeyev ➜ /workspaces/kbot (main) $ export TELE_TOKEN
 export TELE_TOKEN
 @smatvyeyev ➜ /workspaces/kbot (main) $ go get
 @smatvyeyev ➜ /workspaces/kbot (main) $ ./kbot start
