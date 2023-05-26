@@ -36,11 +36,18 @@ to quickly create a Cobra application.`,
 			Poller: &telebot.LongPoller{Timeout: 10 * time.Second},
 		})
 		if err != nil {
-			log.Fatal("Please check TELE_TOKEN variable. %s", err)
+			log.Fatalf("Please check TELE_TOKEN variable. %s", err)
 			return
 		}
 		kbot.Handle(telebot.OnText, func(m telebot.Context) error {
 			log.Print(m.Message().Payload, m.Text())
+			payload := m.Message().Payload
+
+			switch payload {
+			case "hello":
+				err = m.Send(fmt.Sprintf("Hello i`m kbot %s!", appVersion))
+				
+			
 			return err
 		})
 
