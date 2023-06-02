@@ -1,36 +1,33 @@
 # kbot
-app from scratch
-kbot app complete version 1.0.0
+# app from scratch
+# kbot app complete version 1.0.3
 
-Встановити Golang та налаштувати середовище розробки (Codespaces вже містить всі необхідні налаштування)
-Створити новий проєкт на GitHub та налаштувати Git.
-Додати залежність на бібліотеку github.com/spf13/cobra за домопогою import (практичне завдання продемонстровано в лекції 2.4)
-Створити Telegram-бота за допомогою BotFather.
-Отримати токен бота та зберегти його у змінну середовища TELE_TOKEN.
-Імпортувати необхідні бібліотеки.
-Встановити бібліотеку gopkg.in/telebot.v3 за допомогою go get.
-Отримати токен бота зі змінної середовища.
-Створити об'єкт бота за допомогою telebot.NewBot().
-Додати обробник повідомлень за допомогою kbot.Handle(telebot.OnText, func(m telebot.Context)
-Описати функцію-обробник, яка буде відповідати на повідомлення.
-Зібрати, запустити та перевірити бота
-Створити файл README з описом проєкту, посиланням на бота у форматі t.me/<Імʼя_бота>_bot, включаючи інструкції для встановлення та приклади використання команд.
+Простий телеграм бот - t.me/@smatvyeyev1_bot
 
-gofmt -s -w ./
-@smatvyeyev ➜ /workspaces/kbot (main) $ go get
-gofmt -s -w ./
-@smatvyeyev ➜ /workspaces/kbot (main) $ go build -ldflags "-X="github.com/smatvyeyev/kbot/cmd.appVersion=v1.0.1
-@smatvyeyev ➜ /workspaces/kbot (main) $ ./kbot start
-kbot called v1.0.1 started2023/05/24 23:00:21 Please check TELE_TOKEN variable. %stelegram: Not Found (404)
+Використано go lang та бібліотеки github.com/spf13/cobra та gopkg.in/telebot.v3
+Бот відповідає на текст команди /start:
+hello - Hello i`m kbot та додає версію програми
+ping - pong!
+bye - bye-bye!
 
-@smatvyeyev ➜ /workspaces/kbot (main) $ ./kbot version
-v1.0.1
+Для встановлення потрібно зберігти файл kbot у робочу дерикторію,
+та надати права на його виконання (запуск) chmod +x kbot 
 
-@smatvyeyev ➜ /workspaces/kbot (main) $ read -s TELE_TOKEN
-@smatvyeyev ➜ /workspaces/kbot (main) $ echo $TELE_TOKEN
-6070479572:AAHm-6DGPwZGmOoeSfP9Uz_wBS-Ux_TJbWE
-@smatvyeyev ➜ /workspaces/kbot (main) $ export TELE_TOKEN
-export TELE_TOKEN
-@smatvyeyev ➜ /workspaces/kbot (main) $ go get
-@smatvyeyev ➜ /workspaces/kbot (main) $ ./kbot start
-kbot called v1.0.1 started2023/05/26 21:05:20 /start
+Запуск програми (на прикладі середовища GitHub Codespaces):
+1. Створюємо бота в BotFather.
+ Посилання https://telegram.me/botfather  вводимо команду BotFather /newbot,задаємо ім'я та опис бота. 
+ BotFather поверне токен бота. Зберігаємо токен.
+2. В консолі передаємо токен у змінну командою:
+    read -s TELE_TOKEN
+та вводимо значення токену.
+3. Експортуємо значення командою
+    export TELE_TOKEN
+4. запускаємо бота командою 
+    ./kbot start
+як що все вірно то побачемо вивід - kbot called v1.0.3 started
+Бот готовий до роботи :)
+
+Прикдади команд в чаті бота:
+/start hello
+/start ping
+/start bye
