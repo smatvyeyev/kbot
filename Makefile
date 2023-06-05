@@ -23,6 +23,9 @@ build: format get
 
 images:
 	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} 
+
+push:
+	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
 	
 clean:
 	rm -rf kbot
