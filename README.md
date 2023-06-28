@@ -1,6 +1,6 @@
 # kbot
 # app from scratch
-# kbot app complete version 1.0.3
+# kbot app complete version 1.0.8
 
 Простий телеграм бот - t.me/@smatvyeyev1_bot
 
