@@ -92,3 +92,6 @@ read -s TELE_TOKEN
 
 1 спосіб (ручний): перед/після деплою
 kubectl create secret generic kbot --from-literal=token=$TELE_TOKEN
+
+
+треба оновити entrypoint в dockerfile і додати туди start / ENTRYPOINT ["./kbot","start"]
