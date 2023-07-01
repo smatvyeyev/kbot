@@ -94,4 +94,58 @@ read -s TELE_TOKEN
 kubectl create secret generic kbot --from-literal=token=$TELE_TOKEN
 
 
-треба оновити entrypoint в dockerfile і додати туди start / ENTRYPOINT ["./kbot","start"]
+NB! треба оновити entrypoint в dockerfile і додати туди start / ENTRYPOINT ["./kbot","start"]
+
+kubectl get po
+NAME                         READY   STATUS             RESTARTS   AGE
+kbot-helm-test-connection    0/1     Error              0          5h24m
+kbot-helm-6dfb89465c-qjn6r   0/1     ImagePullBackOff   0          3m33s
+kbot-helm-5bc5cb5c8f-4fxz7   0/1     ErrImagePull       0          31s
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ helm list
+NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ helm template kbot ./helm | kubectl apply -f -
+deployment.apps/kbot created
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl get po
+NAME                         READY   STATUS             RESTARTS   AGE
+kbot-helm-test-connection    0/1     Error              0          5h32m
+kbot-helm-5bc5cb5c8f-4fxz7   0/1     ImagePullBackOff   0          8m8s
+kbot-846c4c7dd6-hpptb        0/1     ErrImagePull       0          13s
+kbot-helm-6dfb89465c-qjn6r   0/1     ErrImagePull       0          11m
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl delete  po
+error: resource(s) were provided, but no name was specified
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl delete  po -all
+error: unknown shorthand flag: 'a' in -all
+See 'kubectl delete --help' for usage.
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl delete  po -a
+error: unknown shorthand flag: 'a' in -a
+See 'kubectl delete --help' for usage.
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl delete  po --all
+pod "kbot-helm-test-connection" deleted
+pod "kbot-helm-5bc5cb5c8f-4fxz7" deleted
+pod "kbot-helm-6dfb89465c-qjn6r" deleted
+pod "kbot-846c4c7dd6-hpptb" deleted
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl get po
+NAME                         READY   STATUS         RESTARTS   AGE
+kbot-helm-6dfb89465c-m26qg   0/1     ErrImagePull   0          7s
+kbot-846c4c7dd6-wzc4l        0/1     ErrImagePull   0          7s
+kbot-helm-5bc5cb5c8f-5g2n8   0/1     ErrImagePull   0          7s
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ helm list
+NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ helm list -a
+NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ helm list -all
+NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl get deployments.apps 
+NAME        READY   UP-TO-DATE   AVAILABLE   AGE
+kbot        0/1     1            0           2m4s
+kbot-helm   0/1     1            0           13m
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl delete  deployments.apps 
+error: resource(s) were provided, but no name was specified
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl delete  deployments.apps --all
+deployment.apps "kbot" deleted
+deployment.apps "kbot-helm" deleted
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl get deployments.apps 
+No resources found in default namespace.
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl get po
+No resources found in default namespace.
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl delete  po --all
