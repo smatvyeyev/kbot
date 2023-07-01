@@ -1,7 +1,6 @@
 helm create helm
 helm lint ./helm
 helm template kbot ./helm
-
 curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 k3d cluster create kbot
 kubectl cluster-info
