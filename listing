@@ -151,3 +151,27 @@ No resources found in default namespace.
 
 
 run with docker run -e TELE_TOKEN=6070479572:AAHm-6DGPwZGmOoeSfP9Uz_wBS-Ux_TJbWE a2c4d794a999
+make image
+
+helm package ./helm --version=0.1.1 
+Successfully packaged chart and saved it to: /Users/sergiy.matvyeyev/Library/Mobile Documents/com~apple~CloudDocs/dvp_course/t5/code_session/kbot/kbot-0.1.1.tgz
+➜  kbot git:(main) ✗ gh release create
+? Choose a tag v1.0.8
+? Title (optional) v1.0.8
+? Release notes Write using git tag message as template
+? Is this a prerelease? No
+? Submit? Publish release
+HTTP 422: Validation Failed (https://api.github.com/repos/smatvyeyev/kbot/releases)
+Release.tag_name already exists
+➜  kbot git:(main) ✗ gh release create                      
+? Choose a tag Create a new tag
+? Tag name v1.0.9
+? Title (optional) v1.0.9
+? Release notes Write using generated notes as template
+? Is this a prerelease? No
+? Submit? Publish release
+https://github.com/smatvyeyev/kbot/releases/tag/v1.0.9
+
+gh release list
+➜  kbot git:(main) ✗ gh release upload v1.0.9 kbot-0.1.1.tgz 
+Successfully uploaded 1 asset to v1.0.9
