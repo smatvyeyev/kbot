@@ -5,3 +5,90 @@ helm template kbot ./helm
 curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 k3d cluster create kbot
 kubectl cluster-info
+
+kubectl create secret generic kbot
+
+echo -n '6070479572:AAHm-6DGPwZGmOoeSfP9Uz_wBS-Ux_TJbWE' | base64
+NjA3MDQ3OTU3MjpBQUhtLTZER1B3WkdtT29lU2ZQOVV6X3dCUy1VeF9USmJXRQ==
+
+kubectl edit  secret  kbot
+secret/kbot edited
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ kubectl describe  secret  kbot
+Name:         kbot
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Type:  Opaque
+
+Data
+====
+token:  46 bytes
+
+helm template kbot ./helm | kubectl apply --dry-run -f -
+W0701 17:10:09.414253   26307 helpers.go:692] --dry-run is deprecated and can be replaced with --dry-run=client.
+deployment.apps/kbot-helm created (dry run)
+
+helm template kbot ./helm | kubectl apply --dry-run=client  -f -
+deployment.apps/kbot-helm created (dry run)
+
+helm template kbot ./helm --set secret.key="6070479572:AAHm-6DGPwZGmOoeSfP9Uz_wBS-Ux_TJbWE" | kubectl apply --dry-run=client -f - -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app.kubernetes.io/instance":"kbot","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"helm","app.kubernetes.io/version":"1.16.0","helm.sh/chart":"helm-0.1.0"},"name":"kbot-helm","namespace":"default"},"spec":{"replicas":1,"selector":{"matchLabels":{"app.kubernetes.io/instance":"kbot","app.kubernetes.io/name":"helm"}},"template":{"metadata":{"labels":{"app.kubernetes.io/instance":"kbot","app.kubernetes.io/name":"helm"}},"spec":{"containers":[{"env":[{"name":"TELE_TOKEN","valueFROM":{"secretKeyRef":{"key":"token","name":"kbot"}}}],"image":"smatvyeyev/kbot/helm:v1.0.5-af93f23-arm64-amd64","name":"helm","securityContext":{},"volumeMounts":[{"mountPath":"/dev/mem","name":"dev-mem"}]}],"dnsConfig":{"nameservers":["1.1.1.1"]},"securityContext":{},"volumes":[{"hostPath":{"path":"/dev/mem","type":""},"name":"dev-mem"}]}}}}
+  labels:
+    app.kubernetes.io/instance: kbot
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: helm
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: helm-0.1.0
+  name: kbot-helm
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: kbot
+      app.kubernetes.io/name: helm
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: kbot
+        app.kubernetes.io/name: helm
+    spec:
+      containers:
+      - env:
+        - name: TELE_TOKEN
+          valueFROM:
+            secretKeyRef:
+              key: token
+              name: kbot
+        image: smatvyeyev/kbot/helm:v1.0.5-af93f23-arm64-amd64
+        name: helm
+        securityContext: {}
+        volumeMounts:
+        - mountPath: /dev/mem
+          name: dev-mem
+      dnsConfig:
+        nameservers:
+        - 1.1.1.1
+      securityContext: {}
+      volumes:
+      - hostPath:
+          path: /dev/mem
+          type: ""
+        name: dev-mem
+
+
+  $ helm template kbot ./helm | kubectl apply -f -
+Error from server (BadRequest): error when creating "STDIN": Deployment in version "v1" cannot be handled as a Deployment: strict decoding error: unknown field "spec.template.spec.containers[0].env[0].valueFROM"
+
+
+read -s TELE_TOKEN
+@smatvyeyev ➜ /workspaces/kbot (helm2) $ echo $TELE_TOKEN
+
+1 спосіб (ручний): перед/після деплою
+kubectl create secret generic kbot --from-literal=token=$TELE_TOKEN
