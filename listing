@@ -151,6 +151,7 @@ No resources found in default namespace.
 
 
 run with docker run -e TELE_TOKEN=6070479572:AAHm-6DGPwZGmOoeSfP9Uz_wBS-Ux_TJbWE a2c4d794a999
+
 make image
 
 helm package ./helm --version=0.1.1 
@@ -175,3 +176,65 @@ https://github.com/smatvyeyev/kbot/releases/tag/v1.0.9
 gh release list
 ➜  kbot git:(main) ✗ gh release upload v1.0.9 kbot-0.1.1.tgz 
 Successfully uploaded 1 asset to v1.0.9
+
+helm install kbot https://github.com/smatvyeyev/kbot/releases/download/v1.0.9/kbot-0.1.1.tgz
+NAME: kbot
+LAST DEPLOYED: Sat Jul  1 23:32:31 2023
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=kbot,app.kubernetes.io/instance=kbot" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
+
+  @smatvyeyev ➜ /workspaces/kbot (main) $ helm ls
+NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+kbot    default         1               2023-07-01 23:32:31.9333304 +0000 UTC   deployed        kbot-0.1.1      1.16.0     
+
+@smatvyeyev ➜ /workspaces/kbot (main) $ helm install kbot2 https://github.com/smatvyeyev/kbot/releases/download/v1.0.9/kbot-0.1.1.tgz
+NAME: kbot2
+LAST DEPLOYED: Sat Jul  1 23:44:38 2023
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=kbot,app.kubernetes.io/instance=kbot2" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
+@smatvyeyev ➜ /workspaces/kbot (main) $ kubectl get secrets 
+NAME                          TYPE                 DATA   AGE
+kbot                          Opaque               1      5h57m
+sh.helm.release.v1.kbot.v1    helm.sh/release.v1   1      12m
+sh.helm.release.v1.kbot2.v1   helm.sh/release.v1   1      15s
+@smatvyeyev ➜ /workspaces/kbot (main) $ kubectl get pods
+NAME                     READY   STATUS             RESTARTS      AGE
+kbot-55c7cfd586-dp2b7    0/1     CrashLoopBackOff   7 (94s ago)   12m
+kbot2-6d768c7558-4nrfr   0/1     Error              2 (21s ago)   22s
+@smatvyeyev ➜ /workspaces/kbot (main) $ kubectl logs  ^C
+@smatvyeyev ➜ /workspaces/kbot (main) $ kubectl logs kbot2-6d768c7558-4nrfr
+exec ./kbot: exec format error
+
+docker run -e TELE_TOKEN=6070479572:AAHm-6DGPwZGmOoeSfP9Uz_wBS-Ux_TJbWE smatvyeyev/kbot:v1.0.8-1e5021b-amd64
+Unable to find image 'smatvyeyev/kbot:v1.0.8-1e5021b-amd64' locally
+v1.0.8-1e5021b-amd64: Pulling from smatvyeyev/kbot
+0dd16f85503e: Pull complete 
+8296547b47a7: Pull complete 
+Digest: sha256:16d4239eb5f973e8f895b315fa09e0cd3dd33aed539d02d35ff16a968a757af3
+Status: Downloaded newer image for smatvyeyev/kbot:v1.0.8-1e5021b-amd64
+WARNING: The requested image's platform (linux/arm64) does not match the detected host platform (linux/amd64) and no specific platform was requested
+exec ./kbot: exec format error
+
+docker run --platform linux/amd64 -e TELE_TOKEN=6070479572:AAHm-6DGPwZGmOoeSfP9Uz_wBS-Ux_TJbWE smatvyeyev/kbot:v1.0.8-1e5021b-amd64 
+Unable to find image 'smatvyeyev/kbot:v1.0.8-1e5021b-amd64' locally
+v1.0.8-1e5021b-amd64: Pulling from smatvyeyev/kbot
+Digest: sha256:16d4239eb5f973e8f895b315fa09e0cd3dd33aed539d02d35ff16a968a757af3
+Status: Image is up to date for smatvyeyev/kbot:v1.0.8-1e5021b-amd64
+docker: Error response from daemon: image with reference smatvyeyev/kbot:v1.0.8-1e5021b-amd64 was found but does not match the specified platform: wanted linux/amd64, actual: linux/arm64.
+See 'docker run --help'.
