@@ -1,5 +1,5 @@
 APP= $(shell basename $(shell git remote get-url origin))
-REGISTRY=gcr.io/kbot-388921
+REGISTRY=smatvyeyev
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 
 TARGETOS=linux #linux darwin windows
